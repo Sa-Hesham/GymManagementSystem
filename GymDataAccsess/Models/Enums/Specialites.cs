@@ -10,7 +10,7 @@ namespace GymDataAccsess.Models.Enums
     {
         GenralSpecialies =1,
         Yoga ,
-        bodybuilding,
+        bodyBuilding,
         Fitness,
         Boxing,
 
