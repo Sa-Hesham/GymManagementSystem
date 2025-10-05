@@ -23,6 +23,29 @@ namespace GymDataAccsess.Data.ConFigurations
             base.Configure(builder);
 
 
+
+
+            builder.OwnsOne(m => m.HealthRecord, rec =>
+            {
+                rec.Property(r => r.Notes)
+                .HasColumnType("varchar")
+                .HasMaxLength(100);
+
+                rec.Ignore(rec => rec.CreatedAt);
+                rec.Ignore(rec => rec.Id);
+
+
+
+                rec.Property(r => r.UpdatedAt)
+                .HasColumnName("HealthRecordUpdate")
+                .HasDefaultValueSql("GETDATE()");
+              
+              
+
+
+            });
+
+
         }
     }
 }

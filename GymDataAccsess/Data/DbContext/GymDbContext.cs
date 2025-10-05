@@ -34,6 +34,12 @@ namespace GymDataAccsess.Data
         public DbSet<Sessions> sessions { get; set; }
 
 
+        public DbSet<MemberShip> MemberShips { get; set; }
+
+        public DbSet<MembersBookingSessions> membersBookingSessions { get; set; }
+
+
+
 
 
 

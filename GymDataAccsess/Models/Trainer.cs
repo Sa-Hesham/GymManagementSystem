@@ -14,5 +14,9 @@ namespace GymDataAccsess.Models
 
         public Specialites Specialies { get; set; }    
 
+
+
+        public ICollection<Sessions>Sessions { get; set; }=new LinkedList<Sessions>();
+
     }
 }

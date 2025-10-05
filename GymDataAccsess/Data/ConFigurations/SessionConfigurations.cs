@@ -19,6 +19,26 @@ namespace GymDataAccsess.Data.ConFigurations
                 tb.HasCheckConstraint("EnddateCheak", "EndDate>StartDate");
 
             });
+
+
+
+
+            #region Category-seesion(realtion) 
+
+            builder.HasOne(s => s.SessionCategory)
+                .WithMany(c => c.Sessions)
+                .HasForeignKey(s => s.CategoryId);
+
+
+
+            #endregion
+
+
+            #region Trainer-Session(Relation)
+            builder.HasOne(s=>s.TrainerSession)
+                .WithMany(t=>t.Sessions)
+                .HasForeignKey(s=>s.TrainerId);
+            #endregion
         }
     }
 }

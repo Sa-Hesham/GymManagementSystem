@@ -9,5 +9,12 @@ namespace GymDataAccsess.Models
     internal class Category :BaseEntities 
     {
         public string Name { get; set; } = null!;
+
+
+
+
+
+
+        public ICollection< Sessions> Sessions { get; set; } = new LinkedList<Sessions>();
     }
 }

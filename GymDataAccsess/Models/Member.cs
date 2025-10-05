@@ -9,8 +9,19 @@ namespace GymDataAccsess.Models
 {
     internal class Member :GymUser
     {
-        string  ? Photo {  get; set; } 
+        string  ? Photo {  get; set; }
 
         //joinDate = CreatedDate of BaseEnitites
+
+
+        public HealthRecord HealthRecord { get; set; } = null!;
+
+
+        public ICollection<MemberShip> memberPlans { get; set; } = new List<MemberShip>();  
+
+
+
+
+        public ICollection<MembersBookingSessions> MembersBooking { get; set; } =new List<MembersBookingSessions>();
     }
 }
