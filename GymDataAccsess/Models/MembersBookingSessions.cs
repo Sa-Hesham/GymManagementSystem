@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GymDataAccsess.Models
 {
-    internal class MembersBookingSessions :BaseEntities
+    public class MembersBookingSessions :BaseEntities
     {
 
 

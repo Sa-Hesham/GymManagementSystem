@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GymDataAccsess.Models
 {
-    internal class MemberShip :BaseEntities
+    public class MemberShip :BaseEntities
     {
 
         //startDate = createdAt of BaseEntities
@@ -17,7 +17,7 @@ namespace GymDataAccsess.Models
 
             get
             {
-                if (EndDate >= DateTime.Now)
+                if (EndDate <= DateTime.Now)
                     return "Expired";
                 else
                     return "Ative";

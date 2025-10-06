@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GymDataAccsess.Models.Enums
 {
-    internal enum Specialites
+    public enum Specialites
     {
         GenralSpecialies =1,
         Yoga ,

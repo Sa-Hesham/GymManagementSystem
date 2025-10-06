@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GymDataAccsess.Models
 {
-    internal class HealthRecord :BaseEntities
+    public class HealthRecord :BaseEntities
     {
 
         public decimal Height {  get; set; }

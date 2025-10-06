@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GymDataAccsess.Models
 {
-    internal class Sessions :BaseEntities
+    public class Sessions :BaseEntities
     {
         public string Description { get; set; } = null!;
 

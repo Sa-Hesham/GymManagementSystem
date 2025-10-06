@@ -9,9 +9,15 @@ using System.Threading.Tasks;
 
 namespace GymDataAccsess.Data
 {
-   internal class GymDbContext :DbContext
+   public class GymDbContext :DbContext
 
     {
+       
+
+        public GymDbContext(DbContextOptions<GymDbContext> options) : base(options)
+        {
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=. ; Database=GymSystem ; Trusted_Connection=True ;TrustServerCertificate=True");

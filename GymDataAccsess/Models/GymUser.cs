@@ -8,7 +8,7 @@ using System.Threading.Tasks.Dataflow;
 
 namespace GymDataAccsess.Models
 {
-    internal  abstract class GymUser:BaseEntities
+    public  abstract class GymUser:BaseEntities
     {
 
         

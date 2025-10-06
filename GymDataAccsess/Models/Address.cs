@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace GymDataAccsess.Models
 {
     [Owned]
-    internal class Address
+   public class Address
     {
         public string buildingNo { get; set; } = null!;
 

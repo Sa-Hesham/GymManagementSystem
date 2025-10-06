@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GymDataAccsess.Models
 {
-    internal abstract class BaseEntities
+    public abstract class BaseEntities
     {
         public int Id { get; set; }
 

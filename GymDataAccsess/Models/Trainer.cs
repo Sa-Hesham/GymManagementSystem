@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GymDataAccsess.Models
 {
-    internal class Trainer :GymUser
+    public class Trainer :GymUser
     {
 
         //HireDateCreatedAtBaseOFEntity

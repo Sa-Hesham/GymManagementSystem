@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GymDataAccsess.Models.Enums
 {
-    internal enum Gendar
+    public enum Gendar
     {
         Male =1,
         Female  
