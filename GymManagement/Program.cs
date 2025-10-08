@@ -25,7 +25,8 @@ namespace GymManagement
             });
 
             builder.Services.AddScoped(typeof(IRepositryGenaric<>), typeof(GenaricRpositry<>));
-            builder.Services.AddScoped<IPlanRepositry,PlanRepositry >();
+
+            builder.Services.AddScoped<IUnitOfWork,UnitOFWork>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

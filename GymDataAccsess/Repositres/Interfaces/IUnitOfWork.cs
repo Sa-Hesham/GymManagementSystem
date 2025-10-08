@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace GymDataAccsess.Repositres.Interfaces
 {
-    public interface IPlanRepositry
+   public interface IUnitOfWork 
     {
-        Plan? getById(int id);
+        IRepositryGenaric<TEntity> GetRepositry<TEntity>() where TEntity : BaseEntities, new();
 
-        int update(Plan session);
-        IEnumerable<Plan> GetAll();
+        int saveCahnges();
+        
     }
 }
