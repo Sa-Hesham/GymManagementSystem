@@ -10,7 +10,7 @@ namespace GymDataAccsess.Models
     [Owned]
    public class Address
     {
-        public string buildingNo { get; set; } = null!;
+        public int BuildingNumber { get; set; } 
 
         public string city { get; set; } = null!;
 

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace GymDataAccsess.Repositres.Classes
 {
-    internal class GenaricRpositry<TModel> : IRepositryGenaric<TModel> where TModel : BaseEntities, new()
+    public class GenaricRpositry<TModel> : IRepositryGenaric<TModel> where TModel : BaseEntities, new()
     {
         private readonly GymDbContext dbContext;
 
@@ -30,11 +30,21 @@ namespace GymDataAccsess.Repositres.Classes
             return dbContext.SaveChanges();
         }
 
-        public TModel? GetById(int id) => dbContext.Set<TModel>().Find(id);
-               
-        
+        public IEnumerable<TModel> GetAll(Func<TModel, bool>? condition = null)
+        {
+            
+            if (condition == null)
+            {
+                return dbContext.Set<TModel>().AsNoTracking().ToList();
+            }
+            else
+            {
+                return dbContext.Set<TModel>().AsNoTracking().Where(condition).ToList();
+            }
+        }
 
-        public IEnumerable<TModel> GetAll() =>dbContext.Set<TModel>().AsNoTracking().ToList();
+        public TModel? GetById(int id) => dbContext.Set<TModel>().Find(id);
+             
       
 
         public int Update(TModel model)

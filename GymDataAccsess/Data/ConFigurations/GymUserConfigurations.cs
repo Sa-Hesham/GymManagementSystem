@@ -18,6 +18,9 @@ namespace GymDataAccsess.Data.ConFigurations
                   .HasColumnType("varchar")
                   .HasMaxLength(50);
 
+            
+
+
             builder.Property(b => b.Email)
                 .HasMaxLength(100);
 
@@ -56,7 +59,7 @@ namespace GymDataAccsess.Data.ConFigurations
 
 
 
-                Address.Property(a => a.buildingNo)
+                Address.Property(a => a.BuildingNumber)
                .HasColumnName("BuildingNumber");
 
 

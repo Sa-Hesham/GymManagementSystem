@@ -4,6 +4,7 @@ using GymDataAccsess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GymDataAccsess.Data.Migrations
 {
     [DbContext(typeof(GymDbContext))]
-    partial class GymDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251007144304_AddPhotoToMemebr")]
+    partial class AddPhotoToMemebr
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -324,8 +327,9 @@ namespace GymDataAccsess.Data.Migrations
                             b1.Property<int>("MemberId")
                                 .HasColumnType("int");
 
-                            b1.Property<int>("BuildingNumber")
-                                .HasColumnType("int")
+                            b1.Property<string>("buildingNo")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)")
                                 .HasColumnName("BuildingNumber");
 
                             b1.Property<string>("city")
@@ -419,8 +423,9 @@ namespace GymDataAccsess.Data.Migrations
                             b1.Property<int>("TrainerId")
                                 .HasColumnType("int");
 
-                            b1.Property<int>("BuildingNumber")
-                                .HasColumnType("int")
+                            b1.Property<string>("buildingNo")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)")
                                 .HasColumnName("BuildingNumber");
 
                             b1.Property<string>("city")

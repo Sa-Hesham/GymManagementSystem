@@ -20,7 +20,7 @@ namespace GymDataAccsess.Models
                 if (EndDate <= DateTime.Now)
                     return "Expired";
                 else
-                    return "Ative";
+                    return "Active";
             }
             
 

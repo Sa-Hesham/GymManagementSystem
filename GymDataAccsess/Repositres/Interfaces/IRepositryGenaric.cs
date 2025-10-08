@@ -12,7 +12,7 @@ namespace GymDataAccsess.Repositres.Interfaces
 
         TEntity? GetById(int id);
 
-        IEnumerable<TEntity> GetAll();
+        IEnumerable<TEntity> GetAll(Func<TEntity, bool>? conditiom = null );
 
 
         int Add(TEntity model);

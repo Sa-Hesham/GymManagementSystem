@@ -9,7 +9,7 @@ namespace GymDataAccsess.Models
 {
     public  class Member :GymUser
     {
-        string  ? Photo {  get; set; }
+      public  string  ? Photo {  get; set; }
 
         //joinDate = CreatedDate of BaseEnitites
 

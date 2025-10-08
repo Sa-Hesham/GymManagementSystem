@@ -1,4 +1,6 @@
 using GymDataAccsess.Data;
+using GymDataAccsess.Repositres.Classes;
+using GymDataAccsess.Repositres.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace GymManagement
@@ -22,6 +24,8 @@ namespace GymManagement
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
+            builder.Services.AddScoped(typeof(IRepositryGenaric<>), typeof(GenaricRpositry<>));
+            builder.Services.AddScoped<IPlanRepositry,PlanRepositry >();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

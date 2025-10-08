@@ -14,7 +14,7 @@ namespace GymDataAccsess.Models
         public decimal Weight { get; set; }
 
 
-        string BloodType { get; set; } = null!;
+        public string BloodType { get; set; } = null!;
 
 
 
