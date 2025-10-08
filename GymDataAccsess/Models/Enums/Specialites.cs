@@ -6,9 +6,14 @@ using System.Threading.Tasks;
 
 namespace GymDataAccsess.Models.Enums
 {
-    public enum Gendar
+    public enum Specialites
     {
-        Male =1,
-        Female  
+        GenralSpecialies =1,
+        Yoga ,
+        bodyBuilding,
+        Fitness,
+        Boxing,
+
+
     }
 }
