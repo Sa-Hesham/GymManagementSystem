@@ -17,12 +17,12 @@ namespace GymBusinessLogic.Services.Clasess
      
 
         private readonly IUnitOfWork unitOfWork;
-        private readonly IPlanRepositry planRepositry;
+        
 
-        public MemberServices(IUnitOfWork unitOfWork ,IPlanRepositry planRepositry)
+        public MemberServices(IUnitOfWork unitOfWork )
         {
             this.unitOfWork = unitOfWork;
-            this.planRepositry = planRepositry;
+         
         }
 
 
@@ -214,7 +214,7 @@ namespace GymBusinessLogic.Services.Clasess
             {
                 membersView.MemberShipStartDate = membership.CreatedAt.ToShortDateString();
                 membersView.MemberShipEndDate= membership.EndDate.ToShortDateString();
-                var plan = planRepositry.getById(membership.PlanId);
+                var plan = unitOfWork.GetRepositry<Plan>().GetById(membership.PlanId);
 
                 membersView.PlanName = plan?.Name;
               
