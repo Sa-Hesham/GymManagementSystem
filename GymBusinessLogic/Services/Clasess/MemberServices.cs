@@ -13,18 +13,16 @@ namespace GymBusinessLogic.Services.Clasess
 {
     internal class MemberServices : ImemberService
     {
-        private readonly IRepositryGenaric<Member> memberRepositry;
-        private readonly IRepositryGenaric<MemberShip> memberShipRepositry;
-        private readonly IPlanRepositry planRepositry;
-        private readonly IRepositryGenaric<MembersBookingSessions> memberSessionRepositry;
+ 
+     
 
-        public MemberServices(IRepositryGenaric<Member> memberRepositry, IRepositryGenaric<MemberShip> memberShipRepositry
-            ,IPlanRepositry planRepositry,IRepositryGenaric<MembersBookingSessions>memberSessionRepositry)
+        private readonly IUnitOfWork unitOfWork;
+        private readonly IPlanRepositry planRepositry;
+
+        public MemberServices(IUnitOfWork unitOfWork ,IPlanRepositry planRepositry)
         {
-            this.memberRepositry = memberRepositry;
-            this.memberShipRepositry = memberShipRepositry;
+            this.unitOfWork = unitOfWork;
             this.planRepositry = planRepositry;
-            this.memberSessionRepositry = memberSessionRepositry;
         }
 
 
@@ -32,9 +30,9 @@ namespace GymBusinessLogic.Services.Clasess
         {
             try
             {
-                var EmailIsExist = memberRepositry.GetAll(x => x.Email == createMember.Email).Any();
+                var EmailIsExist =unitOfWork.GetRepositry<Member>().GetAll(x => x.Email == createMember.Email).Any();
                 //cheakphone 
-                var IsPhoneExist = memberRepositry.GetAll(x => x.Phone == createMember.phone).Any();
+                var IsPhoneExist = unitOfWork.GetRepositry<Member>().GetAll(x => x.Phone == createMember.phone).Any();
                 if (IsPhoneExist || EmailIsExist) return false;
 
 
@@ -77,8 +75,8 @@ namespace GymBusinessLogic.Services.Clasess
 
                 };
 
-                return memberRepositry.Add(member) > 0;
-
+                unitOfWork.GetRepositry<Member>().Add(member);
+                return unitOfWork.saveCahnges()>0;
 
             }
             catch (Exception)
@@ -97,22 +95,23 @@ namespace GymBusinessLogic.Services.Clasess
 
         public bool DeleteMember(int Memberid)
         {
-          var member = memberRepositry.GetById(Memberid);   
+          var member = unitOfWork.GetRepositry<Member>().GetById(Memberid);   
             if (member == null) return false;
            
-            var MemberHasSession=memberSessionRepositry.GetAll(x=>x.MemberId == Memberid && x.sessions.StartDate>DateTime.Now).Any();
+            var MemberHasSession= unitOfWork.GetRepositry<MembersBookingSessions>().GetAll(x=>x.MemberId == Memberid && x.sessions.StartDate>DateTime.Now).Any();
             if(MemberHasSession)return false;
 
-            var membership = memberShipRepositry.GetAll(x => x.MemberId == Memberid);
+            var membership = unitOfWork.GetRepositry<MemberShip>().GetAll(x => x.MemberId == Memberid);
             try
             {
                 foreach( var memberShip in membership)
                 {
-                    memberShipRepositry.Delete(memberShip);
+                    unitOfWork.GetRepositry<MemberShip>().Delete(memberShip);
 
                 }
 
-                return memberRepositry.Delete(member) > 0;
+               unitOfWork.GetRepositry<Member>().Delete(member) ;
+                return unitOfWork.saveCahnges() > 0;    
 
             }
             catch (Exception)
@@ -127,47 +126,47 @@ namespace GymBusinessLogic.Services.Clasess
 
         public IEnumerable<GetAllMembersView> GetAll()
         {
-            var Members = memberRepositry.GetAll();
+            var Members = unitOfWork.GetRepositry<Member>().GetAll();
             if (Members == null || !Members.Any())
             {
                 return Enumerable.Empty<GetAllMembersView>();
 
             }
 
-            #region FirstWay
+               #region FirstWay
 
 
-            //var getAllMembersViews = new List<GetAllMembersView>();
+                //var getAllMembersViews = new List<GetAllMembersView>();
 
-            //foreach (var member in Members)
-            //{
+                //foreach (var member in Members)
+                //{
 
-            //    GetAllMembersView membersview = new GetAllMembersView()
-            //    {
+                //    GetAllMembersView membersview = new GetAllMembersView()
+                //    {
 
-            //        Name = member.Name,
-            //        photo = member.Photo,
-            //        phoneNumber = member.Phone,
-            //        Email = member.Email,
-            //        Gendar = member.Gendar.ToString(),
-
-
-
-
-            //    };
-
-
-            //    getAllMembersViews.Add(membersview);
+                //        Name = member.Name,
+                //        photo = member.Photo,
+                //        phoneNumber = member.Phone,
+                //        Email = member.Email,
+                //        Gendar = member.Gendar.ToString(),
 
 
 
-            //}
-            //return getAllMembersViews; 
-            #endregion
 
-            #region Secondway
+                //    };
 
-           var memberviewmodels= Members.Select(m => new GetAllMembersView
+
+                //    getAllMembersViews.Add(membersview);
+
+
+
+                //}
+                //return getAllMembersViews;
+                #endregion
+
+                #region Secondway
+
+                var memberviewmodels= Members.Select(m => new GetAllMembersView
             {
                 Name = m.Name,  
                 phoneNumber=m.Phone,
@@ -188,7 +187,7 @@ namespace GymBusinessLogic.Services.Clasess
 
         public GetAllMembersView? GetMemberDetails(int Memberid)
         {
-            var member =memberRepositry.GetById(Memberid);
+            var member = unitOfWork.GetRepositry<Member>().GetById(Memberid);
             if (member == null) return null;
             GetAllMembersView membersView=new GetAllMembersView() { 
 
@@ -209,7 +208,7 @@ namespace GymBusinessLogic.Services.Clasess
             
             };
 
-            var membership = memberShipRepositry.GetAll(x=>x.MemberId == Memberid && x.Status =="Active")
+            var membership = unitOfWork.GetRepositry<MemberShip>().GetAll(x=>x.MemberId == Memberid && x.Status =="Active")
                 .FirstOrDefault();
             if(membership is not null)
             {
@@ -227,7 +226,7 @@ namespace GymBusinessLogic.Services.Clasess
 
         public HelthRecordView? HelthRecordMember(int Memberid)
         {
-          var member = memberRepositry.GetById(Memberid);   
+          var member = unitOfWork.GetRepositry<Member>().GetById(Memberid);   
             if (member == null) return null;
             HelthRecordView helthRecordView = new HelthRecordView()
             {
@@ -246,7 +245,7 @@ namespace GymBusinessLogic.Services.Clasess
 
         public MemberDataUpdateViewModel? upatedMember(int Memberid)
         {
-            var memberview = memberRepositry.GetById(Memberid);
+            var memberview = unitOfWork.GetRepositry<Member>().GetById(Memberid);
             if (memberview == null) return null;
 
         return new MemberDataUpdateViewModel() { 
@@ -272,11 +271,11 @@ namespace GymBusinessLogic.Services.Clasess
         {
             try
             {
-                var IsEmailExist = memberRepositry.GetAll(x=>x.Email == updateMember.Email).Any();
-                var IsphoneExist = memberRepositry.GetAll(x => x.Phone == updateMember.phone).Any();
+                var IsEmailExist = unitOfWork.GetRepositry<Member>().GetAll(x=>x.Email == updateMember.Email).Any();
+                var IsphoneExist = unitOfWork.GetRepositry<Member>().GetAll(x => x.Phone == updateMember.phone).Any();
                 if (IsEmailExist || IsphoneExist) return false;
               
-                var member = memberRepositry.GetById(id);
+                var member = unitOfWork.GetRepositry<Member>().GetById(id);
                 if (member == null) return false;   
 
                 member.Name=updateMember.name;
@@ -286,10 +285,10 @@ namespace GymBusinessLogic.Services.Clasess
                 member.Address.BuildingNumber=updateMember.BuildingNumber;
                 member.Address.street=updateMember.Street;
                 member.Address.city=updateMember.City;  
-                member.HealthRecord.UpdatedAt=DateTime.Now; 
+                member.HealthRecord.UpdatedAt=DateTime.Now;
 
 
-                return memberRepositry.Update(member) >0;
+                return unitOfWork.saveCahnges() > 0;
 
 
 

@@ -18,17 +18,13 @@ namespace GymDataAccsess.Repositres.Classes
         {
             this.dbContext = dbContext;
         }
-        public int Add(TModel model)
-        {
-            dbContext.Set<TModel>().Add(model); 
-            return dbContext.SaveChanges();
-        }
+        public void Add(TModel model)=> dbContext.Set<TModel>().Add(model); 
+        
+        
 
-        public int Delete(TModel model)
-        {
-            dbContext.Set<TModel>().Remove(model);
-            return dbContext.SaveChanges();
-        }
+        public void Delete(TModel model)=> dbContext.Set<TModel>().Remove(model);
+           
+        
 
         public IEnumerable<TModel> GetAll(Func<TModel, bool>? condition = null)
         {
@@ -47,11 +43,8 @@ namespace GymDataAccsess.Repositres.Classes
              
       
 
-        public int Update(TModel model)
-        {
-
-           dbContext.Set<TModel>().Update(model);
-            return dbContext.SaveChanges();
-        }
+        public void Update(TModel model)=> dbContext.Set<TModel>().Update(model);
+          
+        
     }
 }

@@ -15,12 +15,12 @@ namespace GymDataAccsess.Repositres.Interfaces
         IEnumerable<TEntity> GetAll(Func<TEntity, bool>? conditiom = null );
 
 
-        int Add(TEntity model);
-
-
-        int Update(TEntity model);
-
-
-        int Delete(TEntity model);
+        void Add(TEntity model);
+     
+   
+        void Update(TEntity model);
+      
+      
+        void Delete(TEntity model);
     }
 }
