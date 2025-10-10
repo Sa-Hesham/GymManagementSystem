@@ -8,11 +8,12 @@ namespace GymDataAccsess.Models.Enums
 {
     public enum Specialites
     {
-        GenralSpecialies =1,
+        GenralFitness =1,
         Yoga ,
         bodyBuilding,
         Fitness,
         Boxing,
+        CrossFit,
 
 
     }
