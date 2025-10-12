@@ -67,7 +67,7 @@ namespace GymBusinessLogic.Services.Clasess
             if (trainer == null) return false;
 
 
-            var session = unitOfWork.GetRepositry<Sessions>().GetAll(x=>x.TrainerId== trainerId && x.StartDate >= DateTime.Now).Any();
+            var session = unitOfWork.GetRepositry<Sessions>().GetAll(x=>x.TrainerId== trainerId && x.StartDate > DateTime.Now).Any();
             if(session) return false;
 
             try

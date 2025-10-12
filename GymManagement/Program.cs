@@ -1,4 +1,5 @@
 using GymDataAccsess.Data;
+using GymDataAccsess.Data.SeedData;
 using GymDataAccsess.Repositres.Classes;
 using GymDataAccsess.Repositres.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -27,15 +28,25 @@ namespace GymManagement
             builder.Services.AddScoped(typeof(IRepositryGenaric<>), typeof(GenaricRpositry<>));
 
             builder.Services.AddScoped<IUnitOfWork,UnitOFWork>();
+
+
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
-            if (!app.Environment.IsDevelopment())
-            {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
+            using var scope = app.Services.CreateScope() ;
+
+                var dbcontext = scope.ServiceProvider.GetRequiredService<GymDbContext>() ;
+            GymDataSeeding.seedData(dbcontext);
+
+
+
+
+                // Configure the HTTP request pipeline.
+                if (!app.Environment.IsDevelopment())
+                {
+                    app.UseExceptionHandler("/Home/Error");
+                    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                    app.UseHsts();
+                }
 
             app.UseHttpsRedirection();
             app.UseRouting();
