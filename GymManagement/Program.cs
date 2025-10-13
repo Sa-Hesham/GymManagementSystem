@@ -1,3 +1,4 @@
+using GymBusinessLogic;
 using GymDataAccsess.Data;
 using GymDataAccsess.Data.SeedData;
 using GymDataAccsess.Repositres.Classes;
@@ -28,6 +29,9 @@ namespace GymManagement
             builder.Services.AddScoped(typeof(IRepositryGenaric<>), typeof(GenaricRpositry<>));
 
             builder.Services.AddScoped<IUnitOfWork,UnitOFWork>();
+
+             builder.Services.AddScoped<ISessionRepositry, SessionRepositry>();
+            builder.Services.AddAutoMapper(x => x.AddProfile(new MappingProfiles()));
 
 
             var app = builder.Build();

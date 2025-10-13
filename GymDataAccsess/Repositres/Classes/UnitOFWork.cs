@@ -14,10 +14,14 @@ namespace GymDataAccsess.Repositres.Classes
         private readonly GymDbContext dbContext;
         private readonly Dictionary<string, object> repositry = new();
 
-        public UnitOFWork(GymDbContext dbContext)
+        public UnitOFWork(GymDbContext dbContext ,ISessionRepositry sessionRepositry)
         {
             this.dbContext = dbContext;
+            SessionRepositry=sessionRepositry;
         }
+
+        public ISessionRepositry SessionRepositry { get; }
+
         public IRepositryGenaric<TEntity> GetRepositry<TEntity>() where TEntity : BaseEntities, new()
         {
             var keyName = typeof(TEntity).Name;

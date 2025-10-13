@@ -9,6 +9,7 @@ namespace GymDataAccsess.Repositres.Interfaces
 {
    public interface IUnitOfWork 
     {
+        public ISessionRepositry SessionRepositry { get; }
         IRepositryGenaric<TEntity> GetRepositry<TEntity>() where TEntity : BaseEntities, new();
 
         int saveCahnges();
