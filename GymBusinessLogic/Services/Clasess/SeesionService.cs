@@ -151,7 +151,23 @@ namespace GymBusinessLogic.Services.Clasess
 
 
 
+        public bool DeleteSession(int SessionsId)
+        {
+            try
+            {
+                var session = _unitOfWork.SessionRepositry.GetById(SessionsId);
 
+                if(!IsSessionAvilableToDelete(session!)) return false;
+                _unitOfWork.SessionRepositry.Delete(session!);
+                return _unitOfWork.saveCahnges() > 0;
+            }
+            catch (Exception ex )
+            {
+
+                Console.WriteLine($"delte is faield  {ex}");
+                return false;
+            }
+        }
 
 
 
@@ -203,6 +219,23 @@ namespace GymBusinessLogic.Services.Clasess
         {
 
             return SatrtDate < EndDate;
+        }
+
+
+        private bool IsSessionAvilableToDelete(Sessions session)
+        {
+
+            if (session is null) return false;
+
+            if (session.StartDate <= DateTime.Now && session.EndDate >DateTime.Now) return false;
+            if (session.StartDate > DateTime.Now) return false;
+
+            // if sessions has Active Booking
+            var HasActiveBooking = _unitOfWork.SessionRepositry.GetCountOfBookedSlots(session.Id) > 0;
+
+            if (HasActiveBooking) return false;
+
+            return true;
         }
 
 

@@ -28,5 +28,10 @@ namespace GymBusinessLogic.Services.Interfaces
 
 
 
+        bool DeleteSession( int SessionsId );
+
+
+
+
     }
 }
