@@ -31,6 +31,9 @@ namespace GymDataAccsess.Data.ConFigurations
                 .HasColumnType("varchar")
                 .HasMaxLength(100);
 
+                rec.Property(r => r.BloodType)
+                .HasColumnName("BloodType");
+
                 rec.Ignore(rec => rec.CreatedAt);
                 rec.Ignore(rec => rec.Id);
 
