@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace GymBusinessLogic.Services.Clasess
 {
-    internal class MemberServices : ImemberService
+    public class MemberServices : ImemberService
     {
  
      
@@ -173,6 +173,7 @@ namespace GymBusinessLogic.Services.Clasess
                 photo=m.Photo,
                 Email=m.Email,
                 Gendar=m.Gendar.ToString(),
+                Id=m.Id,
 
 
 
@@ -200,6 +201,8 @@ namespace GymBusinessLogic.Services.Clasess
                Gendar = member.Gendar.ToString(),
 
                DateOfBirth=member.DateOfBirth.ToShortDateString(),
+
+               phoneNumber=member.Phone.ToString(),
 
                Address =$"{member.Address.BuildingNumber } - {member.Address.street} - {member.Address.city}"
                
