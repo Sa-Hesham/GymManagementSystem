@@ -73,22 +73,22 @@
                                         <button class="btn btn-link p-0 border-0" type="button"
                                                 id="dropdownMenuButton-@member.Id" data-bs-toggle="dropdown"
                                                 aria-expanded="false">
-                                            <img src="~/images/action dots.jpg" alt="action icon" />
+                                            <img src="~/Images/action dots.jpg" alt="action icon" />
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-start"
                                             aria-labelledby="dropdownMenuButton-@member.Id">
                                             <li>
                                             <a asp-controller="Member" asp-action="Details" asp-route-id="@member.Id"
                                                    class="dropdown-item d-flex align-items-center gap-3">
-                                                    <img src="~/images/info 1.jpg" alt="info icon"
+                                                    <img src="~/Images/info 1.jpg" alt="info icon"
                                                          style="width: 20px; height: 20px;" />
                                                     <span>View Member Data</span>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="\Member\HealthRecordDetails\memberId"
+                                            <a asp-controller="Member" asp-action="showMemberHelthRecord" asp-route-id="@member.Id"
                                                    class="dropdown-item d-flex align-items-center gap-3">
-                                                    <img src="~/images/info 1.jpg" alt="info icon"
+                                                    <img src="~/Images/info 1.jpg" alt="info icon"
                                                          style="width: 20px; height: 20px;" />
                                                     <span>View Health Record Data</span>
                                                 </a>
@@ -99,7 +99,7 @@
                                             <li>
                                                 <a href="\Member\EditMember\memberId"
                                                    class="dropdown-item d-flex align-items-center gap-3">
-                                                    <img src="~/images/edit.jpg" alt="edit icon"
+                                                    <img src="~/Images/edit.jpg" alt="edit icon"
                                                          style="width: 20px; height: 20px;" />
                                                     <span>Edit Member Data</span>
                                                 </a>
@@ -110,7 +110,7 @@
                                             <li>
                                                 <a href="\Member\Delete\memberId"
                                                    class="dropdown-item d-flex align-items-center gap-3 text-danger">
-                                                    <img src="~/images/x-circle 1.jpg" alt="delete icon"
+                                                    <img src="~/Images/x-circle 1.jpg" alt="delete icon"
                                                          style="width: 20px; height: 20px;" />
                                                     <span>Delete</span>
                                                 </a>

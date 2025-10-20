@@ -30,5 +30,19 @@ namespace GymManagement.Controllers
         
          return View(member);
         }
+
+
+        public IActionResult showMemberHelthRecord(int id)
+        {
+            if (id <= 0) {
+
+                return RedirectToAction(nameof(Index));
+            
+            }
+
+            var memberHelathrecord = _members.HelthRecordMember(id);
+
+            return View(memberHelathrecord);
+        }
     }
 }
