@@ -98,8 +98,12 @@ namespace GymBusinessLogic.Services.Clasess
           var member = unitOfWork.GetRepositry<Member>().GetById(Memberid);   
             if (member == null) return false;
            
-            var MemberHasSession= unitOfWork.GetRepositry<MembersBookingSessions>().GetAll(x=>x.MemberId == Memberid && x.sessions.StartDate>DateTime.Now).Any();
-            if(MemberHasSession)return false;
+            var MemberHasSessionIds= unitOfWork.GetRepositry<MembersBookingSessions>()
+                .GetAll(x=>x.MemberId == Memberid )
+                .Select(x=>x.SessionId);
+
+            var HasFutureSessions = unitOfWork.SessionRepositry.GetAll(x => MemberHasSessionIds.Contains(x.Id) && x.StartDate > DateTime.Now);
+            if(HasFutureSessions.Any()) return false;
 
             var membership = unitOfWork.GetRepositry<MemberShip>().GetAll(x => x.MemberId == Memberid);
             try
@@ -274,9 +278,12 @@ namespace GymBusinessLogic.Services.Clasess
         {
             try
             {
-                var IsEmailExist = unitOfWork.GetRepositry<Member>().GetAll(x=>x.Email == updateMember.Email).Any();
-                var IsphoneExist = unitOfWork.GetRepositry<Member>().GetAll(x => x.Phone == updateMember.phone).Any();
-                if (IsEmailExist || IsphoneExist) return false;
+                var IsEmailExist = unitOfWork.GetRepositry<Member>()
+                    .GetAll(x => x.Email == updateMember.Email && x.Id !=id);
+                var IsphoneExist = unitOfWork.GetRepositry<Member>()
+                    .GetAll(x => x.Phone == updateMember.phone && x.Id != id);
+               
+                if(IsEmailExist.Any() || IsphoneExist.Any()) return false;
               
                 var member = unitOfWork.GetRepositry<Member>().GetById(id);
                 if (member == null) return false;   
