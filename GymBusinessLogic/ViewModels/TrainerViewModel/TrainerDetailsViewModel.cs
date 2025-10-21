@@ -9,6 +9,7 @@ namespace GymBusinessLogic.ViewModels.TrainerViewModel
    public class TrainerDetailsViewModel
     {
 
+        public int id {  get; set; }    
         public string Name { get; set; } = null!;
 
 

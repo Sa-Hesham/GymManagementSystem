@@ -35,6 +35,7 @@ namespace GymManagement
              builder.Services.AddScoped<ISessionRepositry, SessionRepositry>();
             builder.Services.AddAutoMapper(x => x.AddProfile(new MappingProfiles()));
             builder.Services.AddScoped<ImemberService,MemberServices>();
+            builder.Services.AddScoped<ITrainerService,TrainerServices>();  
 
 
             var app = builder.Build();

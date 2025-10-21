@@ -20,6 +20,7 @@ namespace GymBusinessLogic.Services.Clasess
         {
             this.unitOfWork = unitOfWork;
         }
+
         public bool CreatTrainer(CreatTrainerViewModel trainerViewModel)
         {
             try
@@ -92,6 +93,27 @@ namespace GymBusinessLogic.Services.Clasess
             }
 
 
+        }
+
+        public IEnumerable<TrainerDetailsViewModel> Getall()
+        {
+           var Trainers = unitOfWork.GetRepositry<Trainer>().GetAll();
+            if (Trainers is null || !Trainers.Any()) {
+
+                return Enumerable.Empty<TrainerDetailsViewModel>();
+            }
+            
+            var trainerView = Trainers.Select(x => new TrainerDetailsViewModel
+            {
+                id = x.Id,
+                Name = x.Name,
+                Specialites = x.Specialies.ToString(),
+                DateOfBirth = x.DateOfBirth.ToString(),
+                Email = x.Email,
+                Phone = x.Phone,
+                Address = $"{x.Address.BuildingNumber}-{x.Address.street}-{x.Address.city}",
+            });
+            return trainerView; 
         }
 
         public TrainerDetailsViewModel? GetTrainerDetails(int TrainerId)
@@ -168,6 +190,10 @@ namespace GymBusinessLogic.Services.Clasess
             };
 
         }
+
+
+
+
 
 
         private bool  IsEmailExist( string mail)
