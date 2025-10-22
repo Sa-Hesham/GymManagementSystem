@@ -98,33 +98,34 @@ namespace GymManagement.Controllers
             ViewBag.TrainerId = id;
 
             if (id <= 0)
-                {
-                    TempData["ErrorMassege"] = "Id Must Be not negative or 0 ";
-                    return RedirectToAction(nameof(Index));
-                }
+            {
+                TempData["ErrorMassege"] = "Id Must Be not negative or 0 ";
+                return RedirectToAction(nameof(Index));
+            }
 
-                var trainer = _trainer.UpdateTrainerView(id);
-                if (trainer == null)
-                {
+            var trainer = _trainer.UpdateTrainerView(id);
+            if (trainer == null)
+            {
 
-                    TempData["ErrorMassege"] = " Trainer not Found ";
-                    return RedirectToAction(nameof(Index));
-                }
+                TempData["ErrorMassege"] = " Trainer not Found ";
+                return RedirectToAction(nameof(Index));
+            }
 
-       
-                return View(trainer);
 
-            
+            return View(trainer);
+
+
         }
 
         [HttpPost]
 
-        public IActionResult EditTrainer([FromForm] int id, UpdateTrainerViewModelcs trainerView) {
-            
+        public IActionResult EditTrainer([FromForm] int id, UpdateTrainerViewModelcs trainerView)
+        {
+
             if (!ModelState.IsValid)
             {
                 ModelState.AddModelError("InvalidData", "Cheak Data And Missing Field");
-                return View(nameof(Edit),trainerView);
+                return View(nameof(Edit), trainerView);
 
             }
 
@@ -132,19 +133,58 @@ namespace GymManagement.Controllers
             if (!result)
                 TempData["ErrorMassege"] = "Faild to updated ";
             else
-                TempData["SuccsessMassege"] = "Member Updated successfully ";
+                TempData["SuccsessMassege"] = "trainer Updated successfully ";
 
 
 
 
             return RedirectToAction(nameof(Index));
-        
-        
+
+
         }
-        
-        
-        
-        
-        
+
+
+
+
+
+
+
+        public IActionResult DeleteTrainer(int id)
+        {
+
+
+            if (id <= 0)
+            {
+                TempData["ErrorMassege"] = "Id Must Be not negative or 0 ";
+                return RedirectToAction(nameof(Index));
+
+            }
+            var Trainer = _trainer.GetTrainerDetails(id);
+            if (Trainer is null)
+            {
+                TempData["ErrorMassege"] = "Trainer  not Found  ";
+                return RedirectToAction(nameof(Index));
+            }
+
+            ViewBag.TrainerId = id;
+            return View();
+
+        }
+
+
+        [HttpPost]
+        public IActionResult DeleteConfirmed([FromForm] int id)
+        {
+
+            var delete = _trainer.DeleteTrainer(id);
+            if (!delete)
+                TempData["ErrorMassege"] = "Faild to delete";
+            else
+                TempData["SuccsessMassege"] = " Trainer deleted successfully ";
+
+            return RedirectToAction(nameof(Index));
+
+
+        }
     }
 }
