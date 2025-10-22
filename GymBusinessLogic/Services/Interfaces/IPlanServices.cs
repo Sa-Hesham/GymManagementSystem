@@ -14,6 +14,7 @@ namespace GymBusinessLogic.Services.Interfaces
         GetPlanView ? getplanById(int id);
         bool status(int PlanId);
 
+        PlanUpdateView? ReturnplanViewToupdate(int planid);
         bool updatePlan(int id, PlanUpdateView plan);
 
 
