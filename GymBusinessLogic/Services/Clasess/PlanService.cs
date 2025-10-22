@@ -80,7 +80,7 @@ namespace GymBusinessLogic.Services.Clasess
             }
         }
 
-        PlanUpdateView? ReturnplanViewToupdate(int planid)
+      public PlanUpdateView? ReturnplanViewToupdate(int planid)
         {
             var plan= unitOfWork.GetRepositry<Plan>().GetById(planid);
             if (plan is null || plan.IsActive == false) return null;
