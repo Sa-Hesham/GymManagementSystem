@@ -146,8 +146,10 @@ namespace GymBusinessLogic.Services.Clasess
         {
             try
             {
-                if (IsEmailExist(updateTrainer.Email) || IsPhoneExist(updateTrainer.phone)) return false;
-
+              
+               var EmailExist = unitOfWork.GetRepositry<Trainer>().GetAll(x=>x.Email ==updateTrainer.Email && x.Id !=trainerId);
+                var phoneExist  = unitOfWork.GetRepositry<Trainer>().GetAll(x => x.Phone == updateTrainer.phone && x.Id != trainerId);
+                if(EmailExist.Any() || phoneExist.Any()) return false;  
                 var trainer = unitOfWork.GetRepositry<Trainer>().GetById(trainerId);
                 if (trainer == null) return false;
 
@@ -159,7 +161,7 @@ namespace GymBusinessLogic.Services.Clasess
                 trainer.Address.street = updateTrainer.Street;
                 trainer.Specialies = trainer.Specialies;
                 trainer.UpdatedAt = DateTime.Now;
-                unitOfWork.GetRepositry<Trainer>().Add(trainer);
+                unitOfWork.GetRepositry<Trainer>().Update(trainer);
                 return unitOfWork.saveCahnges() > 0;
             }
             catch (Exception)

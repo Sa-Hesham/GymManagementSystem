@@ -9,8 +9,8 @@
             <header class="mb-4">
                 <h3 class="text-primary-color">Add New Trainer</h3>
             </header>
-
-            <form method="post">
+            @Html.ValidationMessage("InvalidData", new { @class = "text-danger" })
+            <form asp-controller="Trainer" asp-action="CreateMember" method="post">
 
                 <!-- Trainer Info -->
                 <div class="section-header mb-3">
@@ -48,7 +48,7 @@
                         <select asp-for="Gendar" asp-items="Html.GetEnumSelectList<Gendar>()" class="form-select">
                             <option value="">-- Select Gender --</option>
                         </select>
-                        <span asp-validation-for="Gendar" class="text-danger"></span>>
+                        <span asp-validation-for="Gendar" class="text-danger"></span>
                     </div>
 
                 </div>
@@ -102,13 +102,22 @@
                             <span asp-validation-for="Specialites" class="text-danger"></span>
                         </div>
 
+                    </div> 
+                    <footer class="d-flex justify-content-end mt-4">
+                        <button type="submit" class="btn btn-fill">Add</button>
+                    </footer>
 
-                <footer class="d-flex justify-content-end mt-4">
-                    <button type="submit" class="btn btn-fill">Add</button>
-                </footer>
+                </div>
+
             </form>
+
 
         </div>
 
     </main>
 </div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"></partial>
+}

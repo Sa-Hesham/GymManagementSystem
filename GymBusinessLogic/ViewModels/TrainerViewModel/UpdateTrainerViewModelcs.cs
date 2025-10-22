@@ -10,6 +10,8 @@ namespace GymBusinessLogic.ViewModels.TrainerViewModel
 {
     public class UpdateTrainerViewModelcs
     {
+        [Required(ErrorMessage = "Name is requierd")]
+        [StringLength(50, MinimumLength = 4, ErrorMessage = "Name must be between 4 and 50 ")]
         public string Name { get; set; } = null!;
 
 
