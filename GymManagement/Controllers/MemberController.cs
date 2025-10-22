@@ -65,7 +65,7 @@ namespace GymManagement.Controllers
             if (!ModelState.IsValid)
             {
                 ModelState.AddModelError("InvalidData", "Cheak Data And Missing Field");
-                return View(nameof(Create),CreateMember);
+                return View(nameof(Create), CreatedMember);
             }
            bool  IsCreated =  _members.CreateMember(CreatedMember);
             if (!IsCreated)

@@ -20,6 +20,7 @@ namespace GymBusinessLogic.Services.Clasess
         {
             this.unitOfWork = unitOfWork;
         }
+
         public bool CreatTrainer(CreatTrainerViewModel trainerViewModel)
         {
             try
@@ -94,6 +95,27 @@ namespace GymBusinessLogic.Services.Clasess
 
         }
 
+        public IEnumerable<TrainerDetailsViewModel> Getall()
+        {
+           var Trainers = unitOfWork.GetRepositry<Trainer>().GetAll();
+            if (Trainers is null || !Trainers.Any()) {
+
+                return Enumerable.Empty<TrainerDetailsViewModel>();
+            }
+            
+            var trainerView = Trainers.Select(x => new TrainerDetailsViewModel
+            {
+                id = x.Id,
+                Name = x.Name,
+                Specialites = x.Specialies.ToString(),
+                DateOfBirth = x.DateOfBirth.ToString(),
+                Email = x.Email,
+                Phone = x.Phone,
+                Address = $"{x.Address.BuildingNumber}-{x.Address.street}-{x.Address.city}",
+            });
+            return trainerView; 
+        }
+
         public TrainerDetailsViewModel? GetTrainerDetails(int TrainerId)
         {
           var trainer= unitOfWork.GetRepositry<Trainer>().GetById(TrainerId);   
@@ -124,8 +146,10 @@ namespace GymBusinessLogic.Services.Clasess
         {
             try
             {
-                if (IsEmailExist(updateTrainer.Email) || IsPhoneExist(updateTrainer.phone)) return false;
-
+              
+               var EmailExist = unitOfWork.GetRepositry<Trainer>().GetAll(x=>x.Email ==updateTrainer.Email && x.Id !=trainerId);
+                var phoneExist  = unitOfWork.GetRepositry<Trainer>().GetAll(x => x.Phone == updateTrainer.phone && x.Id != trainerId);
+                if(EmailExist.Any() || phoneExist.Any()) return false;  
                 var trainer = unitOfWork.GetRepositry<Trainer>().GetById(trainerId);
                 if (trainer == null) return false;
 
@@ -137,7 +161,7 @@ namespace GymBusinessLogic.Services.Clasess
                 trainer.Address.street = updateTrainer.Street;
                 trainer.Specialies = trainer.Specialies;
                 trainer.UpdatedAt = DateTime.Now;
-                unitOfWork.GetRepositry<Trainer>().Add(trainer);
+                unitOfWork.GetRepositry<Trainer>().Update(trainer);
                 return unitOfWork.saveCahnges() > 0;
             }
             catch (Exception)
@@ -168,6 +192,10 @@ namespace GymBusinessLogic.Services.Clasess
             };
 
         }
+
+
+
+
 
 
         private bool  IsEmailExist( string mail)

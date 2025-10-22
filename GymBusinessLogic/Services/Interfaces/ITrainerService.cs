@@ -26,6 +26,9 @@ namespace GymBusinessLogic.Services.Interfaces
         bool DeleteTrainer(int trainerId);
 
 
+        IEnumerable<TrainerDetailsViewModel> Getall();
+
+
      
 
     }
