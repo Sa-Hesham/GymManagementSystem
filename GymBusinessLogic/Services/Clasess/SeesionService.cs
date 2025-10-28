@@ -170,7 +170,19 @@ namespace GymBusinessLogic.Services.Clasess
         }
 
 
+        public IEnumerable<TrainerSelectViewModel> GetAllTrainersdrop()
+        {
+            var trainers =  _unitOfWork.GetRepositry<Trainer>().GetAll();   
 
+            return _mapper.Map <IEnumerable<TrainerSelectViewModel>>(trainers);
+        }
+
+        public IEnumerable<CategorySelectViewModel> GetAllCategoriesdrop()
+        {
+           var Catgeories = _unitOfWork.GetRepositry<Category>().GetAll();
+
+            return _mapper.Map<IEnumerable<CategorySelectViewModel>>(Catgeories);
+        }
 
 
 
@@ -237,6 +249,8 @@ namespace GymBusinessLogic.Services.Clasess
 
             return true;
         }
+
+      
 
 
         #endregion
