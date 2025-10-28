@@ -32,6 +32,12 @@ namespace GymBusinessLogic.Services.Interfaces
 
 
 
+        IEnumerable<TrainerSelectViewModel> GetAllTrainersdrop();
+
+
+        IEnumerable<CategorySelectViewModel> GetAllCategoriesdrop();
+
+
 
     }
 }

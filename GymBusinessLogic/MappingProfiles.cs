@@ -28,6 +28,9 @@ namespace GymBusinessLogic
 
             CreateMap<Sessions, UpdateSessionViewModel>().ReverseMap();
 
+            CreateMap<Trainer, TrainerSelectViewModel>();
+
+            CreateMap<Category, CategorySelectViewModel>();
 
 
         }
