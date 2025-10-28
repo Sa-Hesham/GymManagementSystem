@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GymBusinessLogic.Services.Interfaces
 {
-    internal interface ISeesionService
+    public interface ISeesionService
     {
 
         IEnumerable<SessionViewModel> GetAllSessions();
