@@ -1,4 +1,6 @@
 ﻿using GymDataAccsess.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace GymDataAccsess.Data
 {
-   public class GymDbContext :DbContext
+   public class GymDbContext :IdentityDbContext<ApplicationUser>
 
     {
        
@@ -18,19 +20,27 @@ namespace GymDataAccsess.Data
         {
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Server=. ; Database=GymSystem ; Trusted_Connection=True ;TrustServerCertificate=True");
-        }
-
+       
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            modelBuilder.Entity<ApplicationUser>(eb =>
+            {
+                eb.Property(x => x.FirstName)
+                .HasColumnType("varchar")
+                .HasMaxLength(50);
+
+
+                eb.Property(x => x.LastName)
+               .HasColumnType("varchar")
+               .HasMaxLength(50);
+            });
         }
 
-
+     
         public DbSet<Member> Members { get; set; }
         public DbSet<Trainer> trainers{ get; set; }
         public DbSet<Plan> Plans { get; set; }
