@@ -8,14 +8,14 @@ using System.Threading.Tasks.Dataflow;
 
 namespace GymDataAccsess.Models
 {
-    internal  abstract class GymUser:BaseEntities
+    public  abstract class GymUser:BaseEntities
     {
 
         
         public string Name { get; set; } = null!;
         public string Email { get; set; } = null!;
         public string Phone { get; set; } = null!;
-
+   
         public DateOnly DateOfBirth { get; set; } 
 
 

@@ -1,3 +1,15 @@
+using GymBusinessLogic;
+using GymBusinessLogic.Services.Clasess;
+using GymBusinessLogic.Services.Interfaces;
+using GymDataAccsess.Data;
+using GymDataAccsess.Data.SeedData;
+using GymDataAccsess.Models;
+using GymDataAccsess.Repositres.Classes;
+using GymDataAccsess.Repositres.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+
 namespace GymManagement
 {
     public class Program
@@ -8,8 +20,47 @@ namespace GymManagement
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddDbContext<GymDbContext>(options =>
+            {
+                //Section name in app setting json (First)
+                // second  [json key of section ] =>>>>> GetSection("SectionName")[sectionKeyName]
+                //options.UseSqlServer(builder.Configuration.GetSection("ConnectionStrings")["DefaultConnection"]);
+                //options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]);
+
+                //Short Hand way 
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
+
+
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+             .AddEntityFrameworkStores<GymDbContext>()
+             .AddDefaultTokenProviders();
+    
+
+            builder.Services.AddScoped(typeof(IRepositryGenaric<>), typeof(GenaricRpositry<>));
+
+            builder.Services.AddScoped<IUnitOfWork, UnitOFWork>();
+
+            builder.Services.AddScoped<ISessionRepositry, SessionRepositry>();
+            builder.Services.AddAutoMapper(x => x.AddProfile(new MappingProfiles()));
+            builder.Services.AddScoped<ImemberService, MemberServices>();
+            builder.Services.AddScoped<ITrainerService, TrainerServices>();
+            builder.Services.AddScoped<IPlanServices, PlanService>();
+            builder.Services.AddScoped<ISeesionService, SeesionService>();
+
 
             var app = builder.Build();
+
+            using var scope = app.Services.CreateScope();
+
+            var dbcontext = scope.ServiceProvider.GetRequiredService<GymDbContext>();
+
+            GymDataSeeding.seedData(dbcontext);
+
+            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+            IDentityDataSeeding.seeddata(roleManager, userManager);
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
